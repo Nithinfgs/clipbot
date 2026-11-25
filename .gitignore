@@ -1,0 +1,16 @@
+.env
+buffer/
+clips/
+logs/
+data/
+.venv/
+__pycache__/
+
+# kept local, not published
+clipbot_prompt.md
+SETUP_META_R2.md
+branding/BIOS.md
+branding/preview_circles.png
+.pytest_cache/
+*.pyc
+nohup.out

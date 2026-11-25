@@ -1,0 +1,229 @@
+# ClipBot config. Secrets go in .env, never here.
+
+# mode: post_only                  # uncomment to skip streams and only post already-edited clips
+run:
+  tz: "Asia/Kolkata"          # TODO confirm
+  start: null                 # ISO time, e.g. "2026-11-19T04:30:00+05:30"; null = now
+  hours: 24              # owner "continue" 2026-11-19 16:00: post until cap (~00:45)
+
+bandwidth:
+  cap_mbps: 75                # measured ~105 down / 116 up on 2026-11-18 (83.8 free while bot used ~21); ~70% of capacity
+  live_quality: "480p30,480p,360p30,worst"   # safety-net buffer only (~1.5 Mbps); clips come from VOD at 720p60
+  max_live_recorders: 10      # tier A only
+
+# capture: live = VOD-first + 480p rolling buffer safety net (tier A); vod = chat-only, fetch from VOD on spike.
+# auto = live for tier A, vod otherwise.
+streamers:
+# ig: handle taken from the streamer's own Twitch About-page link AND confirmed live on instagram.com (2026-11-19).
+#     Only these get @mentioned + Reel-tagged; others are credited as twitch.tv/<name>.
+# Top 40 English GTA VI streams live on Twitch, 2026-11-18 ~21:30 IST (viewer counts at that time).
+  - {name: kaicenat,        platform: twitch, tier: A, ig: "kaicenat"}   # 99.8K
+  - {name: theburntpeanut,  platform: twitch, tier: A, ig: "theburntpeanut"}   # 82.6K
+  - {name: ohnepixel,       platform: twitch, tier: A, ig: "ohnepixel"}   # 66.4K
+  - {name: xqc,             platform: twitch, tier: A}   # 66.2K
+  - {name: stableronaldo,   platform: twitch, tier: A, ig: "stableronaldo"}   # 32.1K
+  - {name: ishowspeed,      platform: twitch, tier: A, quality: "720p60,720p,480p"}   # 27.3K  no VOD for live stream -> 720p buffer
+  - {name: lacy,            platform: twitch, tier: A, ig: "lacy.himself"}   # 20.3K
+  - {name: lirik,           platform: twitch, tier: A, ig: "lirik"}   # 16.3K
+  - {name: darkviperau,     platform: twitch, tier: A}   # 15K
+  - {name: jasontheween,    platform: twitch, tier: A, ig: "jasontheween"}   # 14.7K
+  - {name: quin69,          platform: twitch, tier: B}   # 13.1K
+  - {name: typicalgamer,    platform: twitch, tier: B, ig: "typicalgamer"}   # 12.8K
+  - {name: cdawg,           platform: twitch, tier: B, ig: "cdawgva"}   # 11.7K
+  - {name: hutchmf,         platform: twitch, tier: B}   # 11.5K
+  - {name: nickmercs,       platform: twitch, tier: B, ig: "nickmercs"}   # 11.2K
+  - {name: missmikkaa,      platform: twitch, tier: B, ig: "missmikkaa"}   # 10.2K
+  - {name: timthetatman,    platform: twitch, tier: B, ig: "timthetatman"}   # 8.8K
+  - {name: agent00,         platform: twitch, tier: B, ig: "callmeagentzero"}   # 7.7K
+  - {name: clix,            platform: twitch, tier: B, ig: "clix"}   # 6.9K
+  - {name: lvndmark,        platform: twitch, tier: B, ig: "lvndmark_tv"}   # 6.5K
+  - {name: tyrone,          platform: twitch, tier: C, ig: "tyrone1mc"}   # 6.4K
+  - {name: distortion2,     platform: twitch, tier: C}   # 6.4K
+  - {name: joshimuz,        platform: twitch, tier: C}   # ~1.5K (replaces dannyaarons: VODs off)
+  - {name: chiblee,         platform: twitch, tier: C}   # 5.2K
+  - {name: aztecross,       platform: twitch, tier: C}   # 4.9K
+  - {name: tgg_gta,         platform: twitch, tier: C, ig: "tee_gee_gee"}   # 4.6K
+  - {name: syndicate,       platform: twitch, tier: C, ig: "syndicate"}   # 4.5K
+  - {name: officermesser,   platform: twitch, tier: C, ig: "officermesser"}   # 3.8K
+  - {name: zerkaa,          platform: twitch, tier: C, ig: "zerkaa"}   # 3.8K
+  - {name: cashnastygaming, platform: twitch, tier: C}   # ~1.5K (replaces auziomf: VODs off)
+  - {name: swagg,           platform: twitch, tier: C, ig: "swagg_"}   # 2.9K
+  - {name: psp1g,           platform: twitch, tier: C}   # ~1.5K (replaces dinah: VODs off)
+  - {name: lyric,           platform: twitch, tier: C, ig: "lyrics4n"}   # ~1.5K (replaces dasmehdi: VODs off)
+  - {name: sunglitters,     platform: twitch, tier: C}   # 2.1K
+  - {name: spaceboy,        platform: twitch, tier: C, ig: "spaceboyirl"}   # 2.1K
+  - {name: mrsavage,        platform: twitch, tier: C, ig: "mrsavage"}   # ~1.5K (replaces tray: VODs off)
+  - {name: teepee,          platform: twitch, tier: C, ig: "tylerteep"}   # 1.9K
+  - {name: yugi2x,          platform: twitch, tier: C, ig: "yugi2x"}   # 1.9K
+  - {name: rayasianboy,     platform: twitch, tier: C, ig: "rayasianboy_"}   # 1.9K
+  - {name: zoil,            platform: twitch, tier: C}   # 1.8K
+  - {name: zackrawrr,       platform: twitch, tier: A}   # Asmongold, went live during research
+  # backups: big English channels offline at research time; auto-used when they go live
+
+  - {name: caseoh_,         platform: twitch, tier: A, ig: "caseoh_games", backup: true}
+  - {name: jynxzi,          platform: twitch, tier: A, backup: true}
+  - {name: summit1g,        platform: twitch, tier: B, ig: "realsummit1g", backup: true}
+  - {name: shroud,          platform: twitch, tier: B, ig: "shroud", backup: true}
+  - {name: moistcr1tikal,   platform: twitch, tier: B, backup: true}
+  - {name: sodapoppin,      platform: twitch, tier: B, ig: "sodapoppintv", backup: true}
+  - {name: hasanabi,        platform: twitch, tier: B, ig: "hasandpiker", backup: true}
+  - {name: plaqueboymax,    platform: twitch, tier: B, ig: "plaqueboymax", backup: true}
+  - {name: sketch,          platform: twitch, tier: B, ig: "oisketchio", backup: true}
+
+  # reserve pool: live English GTA VI streams (VOD verified 2026-11-19), used to keep 50 active
+  - {name: gladd,           platform: twitch, tier: C}
+  - {name: mrgibbon,        platform: twitch, tier: C}
+  - {name: nickeh30,        platform: twitch, tier: C}
+  - {name: loserfruit,      platform: twitch, tier: C}
+  - {name: kindafunnygames, platform: twitch, tier: C}
+  - {name: break,           platform: twitch, tier: C}
+  - {name: uhsnow,          platform: twitch, tier: C}
+  - {name: johnstone,       platform: twitch, tier: C}
+  - {name: kuruhs,          platform: twitch, tier: C}
+  - {name: maximum,         platform: twitch, tier: C}
+  - {name: swaggersouls,    platform: twitch, tier: C}
+  - {name: crayator,        platform: twitch, tier: C}
+  - {name: brycexd,         platform: twitch, tier: C}
+  - {name: joblessgarrett,  platform: twitch, tier: C}
+  - {name: freyja,          platform: twitch, tier: C}
+  - {name: threedogg,       platform: twitch, tier: C}
+  - {name: kwoli,           platform: twitch, tier: C}
+  - {name: louu,            platform: twitch, tier: C}
+  - {name: tigz,            platform: twitch, tier: C}
+  - {name: broughy1322,     platform: twitch, tier: C}
+  - {name: kreekcraft,      platform: twitch, tier: C}
+  - {name: angryjoeshow,    platform: twitch, tier: C}
+  - {name: tangent,         platform: twitch, tier: C}
+
+  # reserve pool 2: live English GTA VI streams, VOD verified 2026-11-19 03:10
+  - {name: vanosscrew,      platform: twitch, tier: B}
+  - {name: realkatieb,      platform: twitch, tier: B}
+  - {name: fanum,           platform: twitch, tier: B}
+  - {name: squeex,          platform: twitch, tier: B}
+  - {name: extraemily,      platform: twitch, tier: C}
+  - {name: marlon,          platform: twitch, tier: C}
+  - {name: kingwoolz,       platform: twitch, tier: C}
+  - {name: awake,           platform: twitch, tier: C}
+  - {name: penta,           platform: twitch, tier: C}
+  - {name: misterarther,    platform: twitch, tier: C}
+  - {name: luality,         platform: twitch, tier: C}
+  - {name: flats,           platform: twitch, tier: C}
+  - {name: uhn,             platform: twitch, tier: C}
+  - {name: nikolarn,        platform: twitch, tier: C}
+  - {name: adapt,           platform: twitch, tier: C}
+  - {name: blau,            platform: twitch, tier: C}
+  - {name: mooda,           platform: twitch, tier: C}
+  - {name: granny,          platform: twitch, tier: C}
+  - {name: brucegreene,     platform: twitch, tier: C}
+  - {name: juicyjohns,      platform: twitch, tier: C}
+  - {name: shotz,           platform: twitch, tier: C}
+  - {name: wakewilder,      platform: twitch, tier: C}
+  - {name: feelssunnyman,   platform: twitch, tier: C}
+  - {name: kelo,            platform: twitch, tier: C}
+  - {name: hollyrex,        platform: twitch, tier: C}
+  - {name: bazza,           platform: twitch, tier: C}
+  - {name: rntv,            platform: twitch, tier: C}
+  - {name: aliythia,        platform: twitch, tier: C}
+  - {name: ziggy,           platform: twitch, tier: C}
+  - {name: jericho,         platform: twitch, tier: C}
+  - {name: harmless,        platform: twitch, tier: C}
+  - {name: icemanisaac,     platform: twitch, tier: C}
+
+  # reserve pool 3: live English GTA VI streams, VOD verified 2026-11-19 06:40
+  - {name: dizzykitten,     platform: twitch, tier: C}
+  - {name: tbvnks,          platform: twitch, tier: C}
+  - {name: lululuvely,      platform: twitch, tier: C}
+  - {name: cerbervt,        platform: twitch, tier: C}
+  - {name: max_fewtrell,    platform: twitch, tier: C}
+  - {name: pieface23,       platform: twitch, tier: C}
+  - {name: reemknocks,      platform: twitch, tier: C}
+  - {name: connoreatspants, platform: twitch, tier: C}
+  - {name: snowcone,        platform: twitch, tier: C}
+  - {name: nerdcubed,       platform: twitch, tier: C}
+  - {name: bobbypoffgaming, platform: twitch, tier: C}
+  - {name: daddydimmutv,    platform: twitch, tier: C}
+  - {name: ramez05,         platform: twitch, tier: C}
+  - {name: ayofatnap,       platform: twitch, tier: C}
+  - {name: frenchstallion,  platform: twitch, tier: C}
+  - {name: panda__m8,       platform: twitch, tier: C}
+  - {name: alanahpearce,    platform: twitch, tier: C}
+  - {name: bhavdeep_13,     platform: twitch, tier: C}
+
+detector:
+  tick_s: 1.0
+  window_s: 5                 # rolling window for rate/unique counts
+  ewma_halflife_s: 300
+  warmup_s: 180
+  cooldown_s: 75
+  sustain_s: 2
+  raid_suppress_s: 60
+  weights: {unique_z: 1.0, rate_z: 0.5, emote_flood: 3.0, audio_spike: 0.8}
+  threshold: {A: 4.0, B: 4.0, C: 4.5}
+  min_threshold: 2.5          # auto-tune floor
+  max_threshold: 9.0
+  bots: [nightbot, streamelements, moobot, fossabot, streamlabs, wizebot, botrixoficial, sery_bot, soundalerts, kofistreambot]
+  hype_lexicon: [KEKW, LUL, LULW, OMEGALUL, LMAO, LMFAO, LOL, W, L, "???", "no way", NOWAY, CLIP, "clip it", "💀", "😭", "😂", Pog, PogChamp, POGGERS, PogU, monkaS, monkaW, Sadge, ICANT, "HUH", "WHAT", "OMG", "BRO", "NAHH", "LMAOOO", Clueless, Aware, catJAM, EZ]
+
+clip:
+  wait_after_peak_s: 10
+  pre_s: 22
+  post_s: 8
+  vod_latency_s: 8            # measured 7.7s: live receive lags VOD PROGRAM-DATE-TIME (audio xcorr, kaicenat)
+
+buffer:
+  segment_s: 6
+  keep_s: 240
+
+# ---- community rules (from owner, 2026-11-19) ----
+rules:
+  caption_must_credit: true        # creator, which stream, when; tag when IG handle verified (streamers[].ig)
+  caption_no_vulgar: true          # enforced by clipbot/captions.py word filter (video content itself unrestricted)
+  hashtags: any                    # rotate 3-6, never identical sets back-to-back
+  watermark: account_handle        # edit: just show the posting account
+  activity_csv: logs/activity.csv  # every action logged
+
+storage:
+  clips_max_gb: 60                 # clips/ folder cap; oldest deleted first when over
+  min_free_gb: 15                  # also delete oldest-first if disk free drops below this
+
+# ---- Instagram accounts (env: IG_USER_ID_n / IG_TOKEN_n) ----  all brand-new 2026-11-18 -> 30-min ramp first 3h
+accounts:
+  - {name: acc1, env_index: 1, handle: vicecity.laughs,  vibe: funny,     slot_offset_min: 0,
+     color: "&H0000D7FF", hashtags: ["#funny", "#gtafunny", "#lol", "#funnyclips", "#comedy"]}
+  - {name: acc2, env_index: 2, handle: wast.eddaily,     vibe: fails,     slot_offset_min: 3,
+     color: "&H003C3CFF", hashtags: ["#wasted", "#gtafails", "#fails", "#rage", "#ragequit"]}
+  - {name: acc3, env_index: 3, handle: vice_reacts,      vibe: reactions, slot_offset_min: 6,
+     color: "&H00FFC800", hashtags: ["#reaction", "#streamerreacts", "#shocked", "#noway", "#reactions"]}
+  - {name: acc4, env_index: 4, handle: fivestarchaos4,   vibe: chaos,     slot_offset_min: 9,
+     color: "&H00FF50C8", hashtags: ["#chaos", "#gtachaos", "#policechase", "#5stars", "#mayhem"]}
+  - {name: acc5, env_index: 5, handle: vicecityclips969, vibe: best_of,   slot_offset_min: 12,
+     color: "&H0050FF50", hashtags: ["#bestof", "#topclips", "#streamhighlights", "#mustwatch", "#highlights"]}
+
+# ---- hook titles ----
+hooks:
+  ai: false                        # owner: no AI hook titles -> template hooks from chat reaction
+
+# ---- roster: only clip streams that are LIVE AND PLAYING GTA 6 ----
+roster:
+  require_gta6: true
+  other_game_hints: ["valorant", "fortnite", "minecraft", "just chatting", "league of legends", "cs2", "counter-strike",
+                     "apex", "warzone", "gta 5", "gta v ", "gtav", "gta rp", "gtarp", "nopixel", "gta online", "rust",
+                     "elden ring", "roblox", "chess", "overwatch", "dota", "react content", "watch party", "irl"]
+  gta6_title_keywords: ["gta 6", "gta6", "gta vi", "gtavi", "gta-6", "grand theft auto vi", "grand theft auto 6",
+                        "vice city", "leonida", "gta 🌴"]
+  target_active: 50                # keep ~40 live GTA 6 channels in chat; fill with smaller live ones when big ones are off
+  min_viewers: 300                 # don't add tiny channels (chat too thin to detect hype)
+  tier_viewers: {A: 15000, B: 5000}   # discovered streams: >=15k A, >=5k B, else C
+  language: en
+  blocklist: [sashagrey, streamdatabase]
+  blocklist_patterns: ["badge", "drop", "rewards", "farm", "24_7", "247"]
+  refresh_s: 120
+
+# ---- automatic posting (owner authorised auto-post on all 5 accounts, 2026-11-19) ----
+posting:
+  enabled: true
+  new_account_interval_min: 30     # first 3h of the run (accounts are brand-new)
+  new_account_ramp_h: 3
+  interval_min: 16                 # owner: keep 16-min pace until the 45/24h cap
+  cap_per_24h: 45
+  stale_min: 75                    # unposted ready clips older than this are dropped
